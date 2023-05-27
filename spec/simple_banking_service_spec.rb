@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require "simple_banking_service"
+require "account_input_parser"
+require "transfer_input_parser"
 require "tempfile"
 
 RSpec.describe SimpleBankingService do
@@ -10,6 +12,16 @@ RSpec.describe SimpleBankingService do
 
     it "returns an empty string and no error for empty accounts and transfers" do
       expect(SimpleBankingService.run(account_balance, transfers)).to eq("")
+    end
+
+    it "passes the first file to the AccountInputParser and second to TransferInputParser", :aggregate_failures do
+      allow(AccountInputParser).to receive(:parse)
+      allow(TransferInputParser).to receive(:parse)
+
+      SimpleBankingService.run(account_balance, transfers)
+
+      expect(AccountInputParser).to have_received(:parse).with(account_balance)
+      expect(TransferInputParser).to have_received(:parse).with(transfers)
     end
 
     context "with only an account balance file" do
