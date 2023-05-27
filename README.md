@@ -11,6 +11,8 @@ asdf install
 bundle exec ruby -v
 3.2.2
 
+bundle exec rspec
+
 # TODO ...
 ```
 
@@ -20,6 +22,7 @@ TODO ... this will come out of incomplete work from the Work Log analysis
 
 ## Work Log
 
+- [x] add rspec via `bundle add rspec` with defautls
 - [x] add ruby 3.2.2 (latest non preview) using [asdf](https://asdf-vm.com/)
 - [ ] iteration 0
     - [ ] setup build pipeline: rspec, rubocop, tool-version, make file, GitHub
