@@ -12,7 +12,6 @@ NC      = \033[0m
 
 .PHONY: install
 install:
-	asdf install
 	bundle
 
 .PHONY: rubocop-fix

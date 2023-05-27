@@ -38,6 +38,8 @@ TODO ... this will come out of incomplete work from the Work Log analysis
         - [x] add rspec via `bundle add rspec` with defautls
         - [x] add ruby 3.2.2 (latest non preview) using
           [asdf](https://asdf-vm.com/)
+        - [ ] add a `make check-tools` to confirm that the right version of
+          ruby etc are installed
     - [ ] instructions for it to just work? would Docker be a better default
     - [ ] an end to end test, say `spec/features`
     - [ ] how to run this? and what is the output? maybe apply the "simple
