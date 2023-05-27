@@ -44,7 +44,7 @@ feature "simple banking service" do
     Then "the result is CSV matching the correct results" do
       expect(@stdout).to eq("")
       expect(@stderr).to include(
-        <<~EO_STDERR
+        <<~EO_STDERR.chomp
           raise ArgumentError, "need to provide at least 2 input files"
         EO_STDERR
       )
