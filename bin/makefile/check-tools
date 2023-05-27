@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 # Check the required developer tools and versions
 #
 # Usage: make check-tools
