@@ -33,9 +33,15 @@ make rubocop    # run rubocop
 
 TODO ... this will come out of incomplete work from the Work Log analysis
 
+## Extensions
+
+- [ ] setup to run on docker to make it easier and safer to run
+
 ## Work Log
 
-- [ ] iteration 0
+- [x] iteration 0 and analysis complete
+    - 3:30 hours:minutes -> 10:30AM - 3:00PM - 1hour break
+- [x] iteration 0
     - [x] setup build pipeline: rspec, rubocop, tool-version, make file, GitHub
       actions test runner?
         - [x] add a github action `.github/workfows/ci.yml`
@@ -45,11 +51,11 @@ TODO ... this will come out of incomplete work from the Work Log analysis
         - [x] add rspec via `bundle add rspec` with defautls
         - [x] add ruby 3.2.2 (latest non preview) using
           [asdf](https://asdf-vm.com/)
-    - [ ] add a `make check-tools` to confirm that the right version of ruby
+    - [x] add a `make check-tools` to confirm that the right version of ruby
       etc are installed
-    - [ ] instructions for it to just work? would Docker be a better default
+    - [🔜] instructions for it to just work? would Docker be a better default
     - [x] an end to end test, say `spec/features`
-    - [ ] how to run this? and what is the output? maybe apply the "simple
+    - [x] how to run this? and what is the output? maybe apply the "simple
       system" guiding principle and just create a unix terminal app in
       `bin/simple_banking_service.rb`
     - [x] a simple way to run it? say `make` as it is on every computer

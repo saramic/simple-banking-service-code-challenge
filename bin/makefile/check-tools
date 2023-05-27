@@ -1,0 +1,49 @@
+#!/usr/bin/env zsh
+# Check the required developer tools and versions
+#
+# Usage: make check-tools
+
+set -e
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+NC='\033[0m'
+
+NOT_OK=false
+
+echo ""
+
+if [[ ! $ASDF_DIR =~ asdf ]]
+then
+  echo -e "🟡 ${YELLOW}seems asdf is NOT being used or is NOT setup ¯\_(ツ)_/¯${NC}"
+else
+  echo -e "✅ ${GREEN}adsf installed ${ASDF_DIR} ${NC}"
+fi
+
+while read tool_version
+do
+  toolname=$(echo ${tool_version} | cut -d " " -f 1)
+
+  if [[ $ASDF_DIR =~ asdf ]]
+    then
+    if [[ ! $(asdf plugin list | grep ${toolname}) ]]
+    then
+      echo -e "🟡 ${YELLOW}missing asdf plugin ${toolname}${NC}"
+    fi
+  fi
+
+  toolname_exec=${toolname}
+  toolname_version="-v"
+
+  current_version=$(${toolname_exec} ${toolname_version})
+  expected_version=$(grep "${toolname}" .tool-versions | cut -d " " -f 2)
+
+  if [[ ${current_version} != *"${expected_version}"* ]]
+  then
+    echo -e "❌ ${RED}expected your environment to have ${toolname} ${expected_version} but found ${current_version}${NC}"
+    NOT_OK=true
+  else
+    echo -e "✅ ${GREEN}found expected version of ${toolname} ${expected_version}${NC}"
+  fi
+done < .tool-versions

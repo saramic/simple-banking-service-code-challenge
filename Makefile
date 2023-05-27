@@ -10,8 +10,12 @@ GREEN   = \033[0;32m
 YELLOW  = \033[0;33m
 NC      = \033[0m
 
+.PHONY: check-tools
+check-tools:
+	bin/makefile/check-tools
+
 .PHONY: install
-install:
+install: check-tools
 	bundle
 
 .PHONY: rubocop-fix
@@ -54,6 +58,7 @@ usage:
 	@echo "Getting started"
 	@echo
 	@echo "${YELLOW}make${NC}              install, test and run the demo"
+	@echo "${YELLOW}make check-tools${NC}  check right tools (ruby) are installed"
 	@echo "${YELLOW}make build${NC}        test and run the demo"
 	@echo "${YELLOW}make usage${NC}        this menu"
 	@echo
