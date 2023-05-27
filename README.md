@@ -31,6 +31,10 @@ make rubocop    # run rubocop
 
 ## Assumptions
 
+1. using a simple Unix terminal script `bin/simple_banking_service.rb`
+2. any errors will be simply propagated to STDERR in unix terminal
+3. any errors will return a non zero, failing exit code
+
 TODO ... this will come out of incomplete work from the Work Log analysis
 
 ## Extensions
@@ -39,6 +43,14 @@ TODO ... this will come out of incomplete work from the Work Log analysis
 
 ## Work Log
 
+- [ ] get a "simple solution" up and running, it's 3.5 hours in and I still
+  have no code, look at a quick solution to meet a majority of the rubrick:
+  `SimpleBankingService.run(file1, file2)` that reads in all `Accounts` and
+  `Transfers` into memory, applies the transfers (or is this a separate class)
+  and calls a `Reporter` on the `Accounts`
+    - [ ] look at failing fast if things don't work - just raise error
+    - [ ] limited validation for the moment, seems the files have no headers
+    - [ ] no smarts around the size of the processing
 - [x] iteration 0 and analysis complete
     - 3:30 hours:minutes -> 10:30AM - 3:00PM - 1hour break
 - [x] iteration 0
