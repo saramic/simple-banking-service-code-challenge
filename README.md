@@ -2,7 +2,11 @@
 
 ## TL;DR
 
-TODO ...
+```
+bundle && \
+    bundle exec rubocop && \
+    bundle exec rspec
+```
 
 ## Instrctions
 
@@ -13,6 +17,8 @@ bundle exec ruby -v
 
 bundle exec rspec
 
+bundle exec rubocop
+
 # TODO ...
 ```
 
@@ -22,6 +28,8 @@ TODO ... this will come out of incomplete work from the Work Log analysis
 
 ## Work Log
 
+- [x] add standard as a standard set of rubocop rules as per
+    https://evilmartians.com/chronicles/rubocoping-with-legacy-bring-your-ruby-code-up-to-standard
 - [x] add rspec via `bundle add rspec` with defautls
 - [x] add ruby 3.2.2 (latest non preview) using [asdf](https://asdf-vm.com/)
 - [ ] iteration 0
