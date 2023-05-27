@@ -28,14 +28,16 @@ TODO ... this will come out of incomplete work from the Work Log analysis
 
 ## Work Log
 
-- [x] added make file
-- [x] add standard as a standard set of rubocop rules as per
-    https://evilmartians.com/chronicles/rubocoping-with-legacy-bring-your-ruby-code-up-to-standard
-- [x] add rspec via `bundle add rspec` with defautls
-- [x] add ruby 3.2.2 (latest non preview) using [asdf](https://asdf-vm.com/)
 - [ ] iteration 0
-    - [ ] setup build pipeline: rspec, rubocop, tool-version, make file, GitHub
+    - [x] setup build pipeline: rspec, rubocop, tool-version, make file, GitHub
       actions test runner?
+        - [x] add a github action `.github/workfows/ci.yml`
+        - [x] added make file
+        - [x] add standard as a standard set of rubocop rules as per
+            https://evilmartians.com/chronicles/rubocoping-with-legacy-bring-your-ruby-code-up-to-standard
+        - [x] add rspec via `bundle add rspec` with defautls
+        - [x] add ruby 3.2.2 (latest non preview) using
+          [asdf](https://asdf-vm.com/)
     - [ ] instructions for it to just work? would Docker be a better default
     - [ ] an end to end test, say `spec/features`
     - [ ] how to run this? and what is the output? maybe apply the "simple
