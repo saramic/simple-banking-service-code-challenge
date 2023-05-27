@@ -29,6 +29,7 @@ rspec:
 .PHONY: demo
 demo:
 	@echo "${RED}TODO actually make a demo${NC}"
+	bin/simple_banking_service.rb mable_acc_balance.csv mable_trans.csv
 
 .PHONY: build
 build: rspec demo

@@ -6,9 +6,14 @@
 make            # will install and build
 
 make build      # run tests and demo only
+
+make demo       # run as below
+
+bin/simple_banking_service.rb mable_acc_balance.csv mable_trans.csv
 ```
 
-[![CI](https://github.com/saramic/simple-banking-service-code-challenge/actions/workflows/ci.yml/badge.svg)](https://github.com/saramic/simple-banking-service-code-challenge/actions/workflows/ci.yml)
+[![CI](https://github.com/saramic/simple-banking-service-code-challenge/actions/workflows/ci.yml/badge.svg)
+  ](https://github.com/saramic/simple-banking-service-code-challenge/actions/workflows/ci.yml)
 
 ## Instrctions
 
@@ -43,7 +48,7 @@ TODO ... this will come out of incomplete work from the Work Log analysis
     - [ ] add a `make check-tools` to confirm that the right version of ruby
       etc are installed
     - [ ] instructions for it to just work? would Docker be a better default
-    - [ ] an end to end test, say `spec/features`
+    - [x] an end to end test, say `spec/features`
     - [ ] how to run this? and what is the output? maybe apply the "simple
       system" guiding principle and just create a unix terminal app in
       `bin/simple_banking_service.rb`
@@ -120,9 +125,9 @@ TODO ... this will come out of incomplete work from the Work Log analysis
         | :--------------- | --------: | :--------------- |
         | 1111234522226789 |   4820.50 | -500 + 320.50    |
         | 1111234522221234 |   9974.40 | - 25.60          |
-        | 2222123433331212 |    550.00 | + 1000           |
-        | 1212343433335665 |   1200.00 | + 500 + 25.60    |
-        | 3212343433335755 |  50000.00 | - 1000 - 320.50  |
+        | 2222123433331212 |   1550.00 | + 1000           |
+        | 1212343433335665 |   1725.60 | + 500 + 25.60    |
+        | 3212343433335755 |  58679.50 | - 1000 - 320.50  |
 
     - [ ] probably should use a Money library like the Money gem
     - [ ] doing the manual calclations above kind of resembles a double entry

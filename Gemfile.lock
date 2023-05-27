@@ -18,6 +18,8 @@ GEM
       rspec-mocks (~> 3.12.0)
     rspec-core (3.12.2)
       rspec-support (~> 3.12.0)
+    rspec-example_steps (3.1.1)
+      rspec-core (>= 3.0.0)
     rspec-expectations (3.12.3)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.12.0)
@@ -68,6 +70,7 @@ PLATFORMS
 
 DEPENDENCIES
   rspec (~> 3.12)
+  rspec-example_steps (~> 3.1)
   rubocop-performance (~> 1.16)
   rubocop-rspec (~> 2.22)
   standard (~> 1.28)

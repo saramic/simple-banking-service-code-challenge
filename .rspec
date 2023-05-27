@@ -1,1 +1,5 @@
 --require spec_helper
+<<<<<<< Updated upstream
+=======
+--format documentation
+>>>>>>> Stashed changes

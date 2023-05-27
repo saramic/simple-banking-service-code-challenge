@@ -11,9 +11,39 @@
 # a separate helper file that requires the additional dependencies and performs
 # the additional setup, and require it from the spec files that actually need
 # it.
-#
+
+# for the time being choosing to extend the spec_helper file with other
+# required gems
+require "rspec/example_steps"
+
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+  # as per https://github.com/railsware/rspec-example_steps/issues/14
+  RSpec::Core::Formatters.register(
+    RSpec::Core::Formatters::DocumentationFormatter,
+    :example_group_started,
+    :example_group_finished,
+    :example_passed,
+    :example_pending,
+    :example_failed,
+    :example_started,
+    :example_step_passed,
+    :example_step_pending,
+    :example_step_failed
+  )
+
+  # add the Capybara like feature and scenario to make the spec/features read
+  # more like BDD specs as per
+  #   https://github.com/teamcapybara/capybara/blob/master/lib/capybara/rspec/features.rb
+  RSpec.configure do |config|
+    config.alias_example_group_to :feature, :capybara_feature, type: :feature
+    config.alias_example_group_to :xfeature, :capybara_feature, type: :feature, skip: "Temporarily disabled with xfeature"
+    config.alias_example_group_to :ffeature, :capybara_feature, :focus, type: :feature
+    config.alias_example_to :scenario
+    config.alias_example_to :xscenario, skip: "Temporarily disabled with xscenario"
+    config.alias_example_to :fscenario, :focus
+  end
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
