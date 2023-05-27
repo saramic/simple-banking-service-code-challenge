@@ -9,6 +9,8 @@ RSpec/DescribedClass:
   EnforcedStyle: explicit
 
 RSpec/ExampleLength:
+  CountAsOne:
+    - heredoc
   Exclude:
     - spec/features/**/*
 

@@ -11,6 +11,27 @@ RSpec.describe SimpleBankingService do
     it "returns an empty string and no error for empty accounts and transfers" do
       expect(SimpleBankingService.run(account_balance, transfers)).to eq("")
     end
+
+    context "with only an account balance file" do
+      let(:account_balance) do
+        temp_file_with_contents("account_balance.csv") do
+          <<~EO_ACCOUNT_BALANCE_CSV
+            1234560000000001,1.00
+            1234560000000002,2.00
+          EO_ACCOUNT_BALANCE_CSV
+        end
+      end
+
+      it "returns the account balances unchanged" do
+        pending "a parser and writer for account balances"
+        expect(SimpleBankingService.run(account_balance, transfers)).to eq(
+          <<~EXPECTED_OUTPUT
+            1234560000000001,1.00
+            1234560000000002,2.00
+          EXPECTED_OUTPUT
+        )
+      end
+    end
   end
 
   it "throws an error if 2 files are not provided to run" do
