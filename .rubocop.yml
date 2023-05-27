@@ -23,3 +23,4 @@ AllCops:
   MaxFilesInCache: 10000
   Exclude:
     - tmp/**/*
+    - vendor/**/*
