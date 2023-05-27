@@ -8,6 +8,8 @@ make            # will install and build
 make build      # run tests and demo only
 ```
 
+[![CI](https://github.com/saramic/simple-banking-service-code-challenge/actions/workflows/ci.yml/badge.svg)](https://github.com/saramic/simple-banking-service-code-challenge/actions/workflows/ci.yml)
+
 ## Instrctions
 
 ```
@@ -38,14 +40,14 @@ TODO ... this will come out of incomplete work from the Work Log analysis
         - [x] add rspec via `bundle add rspec` with defautls
         - [x] add ruby 3.2.2 (latest non preview) using
           [asdf](https://asdf-vm.com/)
-        - [ ] add a `make check-tools` to confirm that the right version of
-          ruby etc are installed
+    - [ ] add a `make check-tools` to confirm that the right version of ruby
+      etc are installed
     - [ ] instructions for it to just work? would Docker be a better default
     - [ ] an end to end test, say `spec/features`
     - [ ] how to run this? and what is the output? maybe apply the "simple
       system" guiding principle and just create a unix terminal app in
       `bin/simple_banking_service.rb`
-    - [ ] a simple way to run it? say `make` as it is on every computer
+    - [x] a simple way to run it? say `make` as it is on every computer
 - [ ] how to meet expectations of the Rubrick
     - [ ] uses domain models, hmm pull out the Domain Driven Design book and
       see how best to apply bounded contexts?
