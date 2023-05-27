@@ -36,7 +36,7 @@ as an example days transfers.
 
 Single day transacitons for Alpha sales:
 
-| from             | To               | amount  |
+| from             | to               | amount  |
 | ---------------- | ---------------- | ------: |
 | 1111234522226789 | 1212343433335665 |  500.00 |
 | 3212343433335755 | 2222123433331212 | 1000.00 |
