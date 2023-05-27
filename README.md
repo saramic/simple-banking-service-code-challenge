@@ -3,23 +3,23 @@
 ## TL;DR
 
 ```
-bundle && \
-    bundle exec rubocop && \
-    bundle exec rspec
+make            # will install and build
+
+make build      # run tests and demo only
 ```
 
 ## Instrctions
 
 ```
-asdf install
-bundle exec ruby -v
-3.2.2
+make            # install and build
 
-bundle exec rspec
+make usage      # see other makefile usage options
 
-bundle exec rubocop
+make build      # run tests and demo only
 
-# TODO ...
+make rspec      # run tests
+
+make rubocop    # run rubocop
 ```
 
 ## Assumptions
@@ -28,6 +28,7 @@ TODO ... this will come out of incomplete work from the Work Log analysis
 
 ## Work Log
 
+- [x] added make file
 - [x] add standard as a standard set of rubocop rules as per
     https://evilmartians.com/chronicles/rubocoping-with-legacy-bring-your-ruby-code-up-to-standard
 - [x] add rspec via `bundle add rspec` with defautls
