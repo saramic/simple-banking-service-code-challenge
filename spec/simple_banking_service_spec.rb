@@ -26,10 +26,12 @@ RSpec.describe SimpleBankingService do
     end
 
     it "passes the first file to the AccountInputParser and second to TransferInputParser", :aggregate_failures do
+      allow(AccountInputParser).to receive(:parse).and_return("the accounts")
+
       SimpleBankingService.run(account_balance, transfers)
 
       expect(AccountInputParser).to have_received(:parse).with(account_balance)
-      expect(TransferInputParser).to have_received(:parse).with(transfers)
+      expect(TransferInputParser).to have_received(:parse).with("the accounts", transfers)
     end
 
     it "passes the accounts and transfers to a ledger" do

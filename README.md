@@ -57,6 +57,9 @@ make rubocop    # run rubocop
    ~ 30 seconds
    ```
 
+10. if the transfer has an account that does not exist in the provided account
+    file the program will exit with an error
+
 TODO ... this will come out of incomplete work from the Work Log analysis
 
 ## Extensions
