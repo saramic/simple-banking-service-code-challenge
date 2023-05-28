@@ -34,6 +34,13 @@ make rubocop    # run rubocop
 1. using a simple Unix terminal script `bin/simple_banking_service.rb`
 2. any errors will be simply propagated to STDERR in unix terminal
 3. any errors will return a non zero, failing exit code
+4. the first field of the first file needs to be 16 digits or the program will
+   fail
+5. the balance is read using Money and partial cents or negative values will
+   cause the program to exit with an error
+6. all currency is considered AUD and set in `lib/config.rb`
+7. Money gem rounding is set to be explicitly `BigDecimal::ROUND_HALF_UP` but
+   any partial values will cause the program to exit with an error
 
 TODO ... this will come out of incomplete work from the Work Log analysis
 
@@ -48,8 +55,8 @@ TODO ... this will come out of incomplete work from the Work Log analysis
   `SimpleBankingService.run(file1, file2)` that reads in all `Accounts` and
   `Transfers` into memory, applies the transfers (or is this a separate class)
   and calls a `Reporter` on the `Accounts`
-    - [ ] look at failing fast if things don't work - just raise error
-    - [ ] limited validation for the moment, seems the files have no headers
+    - [x] look at failing fast if things don't work - just raise error
+    - [x] limited validation for the moment, seems the files have no headers
     - [ ] no smarts around the size of the processing
 - [x] iteration 0 and analysis complete
     - 3:30 hours:minutes -> 10:30AM - 3:00PM - 1hour break
