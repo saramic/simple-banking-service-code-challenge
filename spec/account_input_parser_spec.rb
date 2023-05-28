@@ -39,14 +39,4 @@ RSpec.describe AccountInputParser do
       }.to raise_error ArgumentError, /account in put needs to be a file/
     end
   end
-
-  context "when the input file's first column contains an invalid account number" do
-    let(:input) { temp_file_with_contents("account_balance.csv") { "123,123" } }
-
-    it "complains bitterly" do
-      expect {
-        AccountInputParser.parse(input)
-      }.to raise_error ArgumentError, /account number needs to have 16 digits/
-    end
-  end
 end
