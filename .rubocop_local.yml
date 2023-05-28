@@ -11,6 +11,7 @@ RSpec/DescribedClass:
 RSpec/ExampleLength:
   CountAsOne:
     - heredoc
+    - hash
   Exclude:
     - spec/features/**/*
 

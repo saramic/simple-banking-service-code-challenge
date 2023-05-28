@@ -5,7 +5,6 @@ require "account_input_parser"
 require "transfer_input_parser"
 require "ledger"
 require "output_writer"
-require "tempfile"
 
 RSpec.describe SimpleBankingService do
   context "with 2 empty files" do
@@ -67,19 +66,4 @@ RSpec.describe SimpleBankingService do
       SimpleBankingService.run
     }.to raise_exception ArgumentError, "need to provide at least 2 input files"
   end
-end
-
-def temp_file_with_contents(filename)
-  Tempfile.new(split_filename_separator_extension(filename)).tap do |file|
-    file.write yield
-    file.flush
-  end
-end
-
-def split_filename_separator_extension(filename)
-  separator_index = filename.index(".")
-  [
-    filename.slice(0, separator_index),
-    filename.slice(separator_index, filename.length)
-  ]
 end
