@@ -51,4 +51,20 @@ RSpec.describe Account do
       end
     end
   end
+
+  describe "#perform_transfer" do
+    let(:account_from) { Account.new(account_number: "1234560000000001", balance: "10") }
+    let(:account_to) { Account.new(account_number: "1234560000000002", balance: "0") }
+    let(:transfer) { Transfer.new(from: account_from, to: account_to, amount: "9.95") }
+
+    context "when from account would go negative" do
+      let(:transfer) { Transfer.new(from: account_from, to: account_to, amount: "10.01") }
+
+      it "complains bitterly" do
+        expect {
+          account_from.perform_transfer!(transfer)
+        }.to raise_error ArgumentError, 'transfer of "$10.01" would bring account "1234560000000001" below 0 with current balance "$10.00"'
+      end
+    end
+  end
 end

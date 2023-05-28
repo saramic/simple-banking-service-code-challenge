@@ -16,6 +16,19 @@ class Account
     Money.from_cents(balance_in_cents)
   end
 
-  def perform_transfer(transfer)
+  def perform_transfer!(transfer)
+    transfer.to.credit_cents(debit_cents(transfer.amount_in_cents))
+  end
+
+  protected
+
+  def debit_cents(amount_in_cents)
+    if @balance_in_cents - amount_in_cents <= 0
+      raise ArgumentError, "transfer of #{Money.from_cents(amount_in_cents).format.inspect} " \
+        "would bring account #{number.inspect} below 0 with current balance #{balance.format.inspect}"
+    end
+  end
+
+  def credit_cents(amount_in_cents)
   end
 end
