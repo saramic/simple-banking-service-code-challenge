@@ -43,6 +43,19 @@ make rubocop    # run rubocop
    any partial values will cause the program to exit with an error
 8. if there are no transfers the balances will just flow through and be output
    unaltered
+9. taking a "simple solution" guiding principle this loads all the accounts
+   into memory so it will have performance limitations if the file is too big,
+   for the time being the account balance file is considered to be ok up to
+   1,000,000 (1 million) accounts which sounds more than reasonable for all the
+   accounts for a single company
+
+   ```
+   ruby -e '(0..1_000_000).each{|num| puts "123456%016d,10.00" % num }' \
+     > large_account_balances.csv
+
+   time bin/simple_banking_service.rb large_account_balances.csv  mable_trans.csv
+   ~ 30 seconds
+   ```
 
 TODO ... this will come out of incomplete work from the Work Log analysis
 
