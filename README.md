@@ -106,6 +106,8 @@ coverage reports
 - [ ] investigate storing the data in different stores, tree, database, Apache
   Arrow, Apache Parquet, other
 - [ ] make the errors more friendly
+- [ ] make work on GitHub Actions without the need for bundle exec, maybe
+  loading bundle environment from demo script or use zietwerk?
 
 ## Retrospective
 

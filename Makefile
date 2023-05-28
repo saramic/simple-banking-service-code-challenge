@@ -32,7 +32,7 @@ rspec:
 
 .PHONY: demo
 demo:
-	bin/simple_banking_service.rb mable_acc_balance.csv mable_trans.csv
+	bundle exec bin/simple_banking_service.rb mable_acc_balance.csv mable_trans.csv
 
 .PHONY: build
 build: rspec demo
