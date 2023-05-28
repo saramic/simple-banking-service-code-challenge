@@ -10,11 +10,13 @@ RSpec.describe SimpleBankingService do
   context "with 2 empty files" do
     let(:account_balance) { temp_file_with_contents("account_balance.csv") { "" } }
     let(:transfers) { temp_file_with_contents("transfers.csv") { "" } }
+    let(:mock_ledger) { instance_double(Ledger) }
 
     before do
       allow(AccountInputParser).to receive(:parse)
       allow(TransferInputParser).to receive(:parse)
-      allow(Ledger).to receive(:new).and_call_original
+      allow(Ledger).to receive(:new).and_return(mock_ledger)
+      allow(mock_ledger).to receive(:accounts).and_return([])
     end
 
     it "returns the output of ledger.accounts via the OutputWriter" do
@@ -30,7 +32,7 @@ RSpec.describe SimpleBankingService do
       expect(TransferInputParser).to have_received(:parse).with(transfers)
     end
 
-    it "passes the accounts and transfers to a ledger", :aggregate_failures do
+    it "passes the accounts and transfers to a ledger" do
       allow(AccountInputParser).to receive(:parse).and_return("the accounts")
       allow(TransferInputParser).to receive(:parse).and_return("the transfers")
 
@@ -39,25 +41,36 @@ RSpec.describe SimpleBankingService do
       expect(Ledger).to have_received(:new).with("the accounts", "the transfers")
     end
 
-    context "with only an account balance file" do
-      let(:account_balance) do
-        temp_file_with_contents("account_balance.csv") do
-          <<~EO_ACCOUNT_BALANCE_CSV
-            1234560000000001,1.00
-            1234560000000002,2.00
-          EO_ACCOUNT_BALANCE_CSV
-        end
-      end
+    it "writes the output of ledger accounts through the OutputWriter", :aggregate_failures do
+      allow(mock_ledger).to receive(:accounts).and_return("the ledger accounts")
+      allow(OutputWriter).to receive(:write).and_return("the output writer output")
 
-      it "returns the account balances unchanged" do
-        pending "a parser and writer for account balances"
-        expect(SimpleBankingService.run(account_balance, transfers)).to eq(
-          <<~EXPECTED_OUTPUT
-            1234560000000001,1.00
-            1234560000000002,2.00
-          EXPECTED_OUTPUT
-        )
+      expect(
+        SimpleBankingService.run(account_balance, transfers)
+      ).to eq "the output writer output"
+
+      expect(OutputWriter).to have_received(:write).with("the ledger accounts")
+    end
+  end
+
+  context "with only an account balance file" do
+    let(:account_balance) do
+      temp_file_with_contents("account_balance.csv") do
+        <<~EO_ACCOUNT_BALANCE_CSV
+          1234560000000001,1.00
+          1234560000000002,2.00
+        EO_ACCOUNT_BALANCE_CSV
       end
+    end
+    let(:transfers) { temp_file_with_contents("transfers.csv") { "" } }
+
+    it "returns the account balances unchanged" do
+      expect(SimpleBankingService.run(account_balance, transfers)).to eq(
+        <<~EXPECTED_OUTPUT
+          1234560000000001,1.00
+          1234560000000002,2.00
+        EXPECTED_OUTPUT
+      )
     end
   end
 

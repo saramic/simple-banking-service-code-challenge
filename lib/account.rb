@@ -10,6 +10,10 @@ class Account
     @balance_in_cents = parse_balance(balance)
   end
 
+  def balance
+    Money.from_cents(balance_in_cents)
+  end
+
   private
 
   def parse_balance(balance)

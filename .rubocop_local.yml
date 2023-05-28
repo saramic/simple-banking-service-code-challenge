@@ -9,6 +9,7 @@ RSpec/DescribedClass:
   EnforcedStyle: explicit
 
 RSpec/ExampleLength:
+  Max: 7
   CountAsOne:
     - heredoc
     - hash

@@ -41,6 +41,8 @@ make rubocop    # run rubocop
 6. all currency is considered AUD and set in `lib/config.rb`
 7. Money gem rounding is set to be explicitly `BigDecimal::ROUND_HALF_UP` but
    any partial values will cause the program to exit with an error
+8. if there are no transfers the balances will just flow through and be output
+   unaltered
 
 TODO ... this will come out of incomplete work from the Work Log analysis
 
@@ -50,6 +52,9 @@ TODO ... this will come out of incomplete work from the Work Log analysis
 
 ## Work Log
 
+- [x] basis for a simple solution, a pass through solution for account balances
+  now works, but still no solution after 7 hours
+    - 3:30 hours:minutes -> 8:30AM - 12:00PM
 - [ ] get a "simple solution" up and running, it's 3.5 hours in and I still
   have no code, look at a quick solution to meet a majority of the rubrick:
   `SimpleBankingService.run(file1, file2)` that reads in all `Accounts` and
@@ -57,7 +62,7 @@ TODO ... this will come out of incomplete work from the Work Log analysis
   and calls a `Reporter` on the `Accounts`
     - [x] look at failing fast if things don't work - just raise error
     - [x] limited validation for the moment, seems the files have no headers
-    - [ ] no smarts around the size of the processing
+    - [x] no smarts around the size of the processing
 - [x] iteration 0 and analysis complete
     - 3:30 hours:minutes -> 10:30AM - 3:00PM - 1hour break
 - [x] iteration 0
