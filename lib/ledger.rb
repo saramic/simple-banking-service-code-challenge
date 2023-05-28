@@ -4,4 +4,7 @@ class Ledger
   def initialize(accounts, transfers)
     @accounts = accounts
   end
+
+  def apply_transfers
+  end
 end

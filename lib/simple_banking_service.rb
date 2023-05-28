@@ -9,7 +9,7 @@ class SimpleBankingService
     accounts = AccountInputParser.parse(input_files.first)
     transfers = TransferInputParser.parse(accounts, input_files[1])
     ledger = Ledger.new(accounts, transfers)
-    # ledger.apply_transfers
+    ledger.apply_transfers
     OutputWriter.write(ledger.accounts)
   end
 

@@ -17,6 +17,7 @@ RSpec.describe SimpleBankingService do
       allow(TransferInputParser).to receive(:parse)
       allow(Ledger).to receive(:new).and_return(mock_ledger)
       allow(mock_ledger).to receive(:accounts).and_return([])
+      allow(mock_ledger).to receive(:apply_transfers)
     end
 
     it "returns the output of ledger.accounts via the OutputWriter" do
@@ -41,6 +42,12 @@ RSpec.describe SimpleBankingService do
       SimpleBankingService.run(account_balance, transfers)
 
       expect(Ledger).to have_received(:new).with("the accounts", "the transfers")
+    end
+
+    it "applies the transfers on the ledger" do
+      SimpleBankingService.run(account_balance, transfers)
+
+      expect(mock_ledger).to have_received(:apply_transfers)
     end
 
     it "writes the output of ledger accounts through the OutputWriter", :aggregate_failures do
