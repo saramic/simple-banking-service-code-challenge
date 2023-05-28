@@ -27,7 +27,15 @@ make build      # run tests and demo only
 make rspec      # run tests
 
 make rubocop    # run rubocop
+
+open coverage/index.html  # to view coverage
 ```
+
+added coverage although not a fan of this as if you write your code BDD/TDD you
+would expect to have almost double coverage of all the lines. The current
+coverage reports
+
+> All Files ( 100.0% covered at 2.65 hits/line )
 
 ## Assumptions
 
@@ -99,7 +107,30 @@ make rubocop    # run rubocop
   Arrow, Apache Parquet, other
 - [ ] make the errors more friendly
 
+## Retrospective
+
+* writing quality software is hard
+* spent a lot more time on the inital analysis and repository setup then I
+  would have hoped or imagined but it was definitely worth thinking about the
+  problem (3.5 hours rather than maybe 1.5 hours I would have hoped for)
+* very happy with the size of commits and the way the work was split out
+* spent a lot longer on getting an inital solution out then would have expected
+  (6.5 hours rather than ~3 hours)
+* would have been good to focus on some new libraries: validation with
+  dry-validation or similar, or some variations on the boring approach: writing
+  out a full ledger of all transactions maybe ¯\_(ツ)_/¯
+
+* overall reasonably happy with the setup and the functionality of the code
+* not too happy that the design could be easily extended for a different input
+  format say if moving from CSV to JSON
+
 ## Work Log
+
+- [x] finally completed a basic running version of the app, certainly ran out
+  of time to do any real cool extensions but kept to the idea of "simple
+  solution" 3 hours -> 12:00PM - 3:00PM
+
+  in all this is **10 hours** work -> 3:30 + 3:30 + 3:00
 
 - [x] basis for a simple solution, a pass through solution for account balances
   now works, but still no solution after 7 hours
@@ -132,13 +163,13 @@ make rubocop    # run rubocop
       system" guiding principle and just create a unix terminal app in
       `bin/simple_banking_service.rb`
     - [x] a simple way to run it? say `make` as it is on every computer
-- [ ] how to meet expectations of the Rubrick
+- [x] how to meet expectations of the Rubrick
     - [x] uses domain models, hmm pull out the Domain Driven Design book and
       see how best to apply bounded contexts?
     - [x] idea of using native data structures, arrays, hashes? is there a need
       for anything more complicated?
     - [x] use rspec
-    - [ ] coverage? not a coverage report fan but might be an idea? my view is
+    - [x] coverage? not a coverage report fan but might be an idea? my view is
       everything is covered by an outside in BDD test as well as a TDD unit
       test
     - [x] tests are orthogonal? pull out the dictionary - do we mean

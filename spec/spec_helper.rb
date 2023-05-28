@@ -15,6 +15,7 @@
 # for the time being choosing to extend the spec_helper file with other
 # required gems
 require "rspec/example_steps"
+require "simplecov"
 Dir[File.join(__dir__, "support/**/*.rb")].sort.each { |filename| require filename }
 
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration

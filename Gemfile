@@ -12,4 +12,5 @@ gem "standard", "~> 1.28", require: false
 group :test do
   gem "rspec", "~> 3.12"
   gem "rspec-example_steps", "~> 3.1"
+  gem "simplecov", "~> 0.22.0", require: false
 end
