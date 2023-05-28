@@ -14,4 +14,7 @@ class Transfer
     @to = to
     @amount_in_cents = parse_money_amount(amount)
   end
+
+  def apply!
+  end
 end

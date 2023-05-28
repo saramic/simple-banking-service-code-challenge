@@ -41,7 +41,7 @@ RSpec.describe SimpleBankingService do
 
       SimpleBankingService.run(account_balance, transfers)
 
-      expect(Ledger).to have_received(:new).with("the accounts", "the transfers")
+      expect(Ledger).to have_received(:new).with(accounts: "the accounts", transfers: "the transfers")
     end
 
     it "applies the transfers on the ledger" do
