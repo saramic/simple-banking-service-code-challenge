@@ -3,6 +3,7 @@
 require "simple_banking_service"
 require "account_input_parser"
 require "transfer_input_parser"
+require "ledger"
 require "tempfile"
 
 RSpec.describe SimpleBankingService do
@@ -22,6 +23,16 @@ RSpec.describe SimpleBankingService do
 
       expect(AccountInputParser).to have_received(:parse).with(account_balance)
       expect(TransferInputParser).to have_received(:parse).with(transfers)
+    end
+
+    it "passes the accounts and transfers to a ledger", :aggregate_failures do
+      allow(AccountInputParser).to receive(:parse).and_return("the accounts")
+      allow(TransferInputParser).to receive(:parse).and_return("the transfers")
+      allow(Ledger).to receive(:new)
+
+      SimpleBankingService.run(account_balance, transfers)
+
+      expect(Ledger).to have_received(:new).with("the accounts", "the transfers")
     end
 
     context "with only an account balance file" do
