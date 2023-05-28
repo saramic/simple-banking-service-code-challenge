@@ -15,4 +15,7 @@ class Account
   def balance
     Money.from_cents(balance_in_cents)
   end
+
+  def perform_transfer(transfer)
+  end
 end

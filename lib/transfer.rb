@@ -16,5 +16,6 @@ class Transfer
   end
 
   def apply!
+    from.perform_transfer(self)
   end
 end

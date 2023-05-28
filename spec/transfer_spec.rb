@@ -6,6 +6,7 @@ RSpec.describe Transfer do
 
   before do
     allow_any_instance_of(Util::MoneyAmountParser).to receive(:parse_money_amount) # rubocop:disable RSpec/AnyInstance
+    allow(account_one).to receive(:perform_transfer)
   end
 
   context "with valid to and from acccount and amount" do
@@ -22,6 +23,13 @@ RSpec.describe Transfer do
 
       expect(transfer.amount_in_cents).to eq "the amount in cents"
       expect(transfer).to have_received(:parse_money_amount).with("10.00")
+    end
+
+    it "can apply a transfer to the from account" do
+      transfer = Transfer.new(from: account_one, to: account_two, amount: "10.00")
+      transfer.apply!
+
+      expect(account_one).to have_received(:perform_transfer).with(transfer)
     end
   end
 
