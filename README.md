@@ -32,18 +32,19 @@ make rubocop    # run rubocop
 ## Assumptions
 
 1. using a simple Unix terminal script `bin/simple_banking_service.rb`
-2. any errors will be simply propagated to STDERR in unix terminal
-3. any errors will return a non zero, failing exit code
-4. the first field of the first file needs to be 16 digits or the program will
-   fail
-5. the balance is read using Money and partial cents or negative values will
+1. any errors will be simply propagated to STDERR in Unix terminal
+1. any errors will return a non zero, failing exit code
+1. the first file is always considered to be the account balances with the
+   first 2 columns being 16 digit account numbers and valid Money
+1. invalid account numbers will cause the program to exit with an error
+1. the balance is read using Money and partial cents or negative values will
    cause the program to exit with an error
-6. all currency is considered AUD and set in `lib/config.rb`
-7. Money gem rounding is set to be explicitly `BigDecimal::ROUND_HALF_UP` but
+1. all currency is considered AUD and set in `lib/config.rb`
+1. Money gem rounding is set to be explicitly `BigDecimal::ROUND_HALF_UP` but
    any partial values will cause the program to exit with an error
-8. if there are no transfers the balances will just flow through and be output
+1. if there are no transfers the balances will just flow through and be output
    unaltered
-9. taking a "simple solution" guiding principle this loads all the accounts
+1. taking a "simple solution" guiding principle this loads all the accounts
    into memory so it will have performance limitations if the file is too big,
    for the time being the account balance file is considered to be ok up to
    1,000,000 (1 million) accounts which sounds more than reasonable for all the
@@ -57,22 +58,53 @@ make rubocop    # run rubocop
    ~ 30 seconds
    ```
 
-10. if the transfer has an account that does not exist in the provided account
-    file the program will exit with an error
-11. nothing wrong with transfers between same account, nothing should happen
-
-TODO ... this will come out of incomplete work from the Work Log analysis
+1. if the transfer has an account that does not exist in the provided account
+   file the program will exit with an error
+1. nothing wrong with transfers between same account, nothing should happen
+1. taking a "fail fast" approach, any problem will cause an error, and the
+   program will exit with an error code. This is preferred over "fail slow" as
+   it is more work having to deal with partial errors. For example if only 1
+   account was affected by a transfer that took the account below 0, should you
+   apply the transfers? or not? I take the "fail fast" approach that it does
+   not meet the needs of the program and hence should fail immediately.
+1. Money can NEVER go below zero - this was not explicit in the initial
+   instructions, for exampole if account X had +$10 and it needed to transfer
+   -$11 but later get +$100 this would "fail fast" on the first transaction
+   that took the balance below $0
+1. only CSV will be supported
+1. this is not actually the "banking service" just a simple verify script to
+   show final balances and show that the transfers can be applied in a valid
+   fashion
+1. only customers that have a account balance in account balances are supported
+1. no consideration is take for customers who are NOT in a processable state,
+   they are invalid or inactive as there seems no way to tell that from the
+   current data
+1. limited work has been done to deal with wrong data
+1. no way to know "which day" the transfers are actually being applied for,
+   just taken as the files provided are the right files for the current time
 
 ## Extensions
 
 - [ ] setup to run on docker to make it easier and safer to run
+- [ ] extend to have more of a double ledger, at this point in time the
+  transfers are just applied and not added to a ledger which could be confirmed
+  that they have all been applied
+- [ ] explore the possibility of splitting this up across separate processes,
+  how would this work? could the transfers be applied separately and later
+  joined?
+- [ ] when and how could a caching layer be added? to look up the account and
+  current balance? at the moment the account is stored in an array? maybe a
+  hash would be fater?
+- [ ] investigate storing the data in different stores, tree, database, Apache
+  Arrow, Apache Parquet, other
+- [ ] make the errors more friendly
 
 ## Work Log
 
 - [x] basis for a simple solution, a pass through solution for account balances
   now works, but still no solution after 7 hours
     - 3:30 hours:minutes -> 8:30AM - 12:00PM
-- [ ] get a "simple solution" up and running, it's 3.5 hours in and I still
+- [x] get a "simple solution" up and running, it's 3.5 hours in and I still
   have no code, look at a quick solution to meet a majority of the rubrick:
   `SimpleBankingService.run(file1, file2)` that reads in all `Accounts` and
   `Transfers` into memory, applies the transfers (or is this a separate class)
@@ -101,69 +133,69 @@ TODO ... this will come out of incomplete work from the Work Log analysis
       `bin/simple_banking_service.rb`
     - [x] a simple way to run it? say `make` as it is on every computer
 - [ ] how to meet expectations of the Rubrick
-    - [ ] uses domain models, hmm pull out the Domain Driven Design book and
+    - [x] uses domain models, hmm pull out the Domain Driven Design book and
       see how best to apply bounded contexts?
-    - [ ] idea of using native data structures, arrays, hashes? is there a need
+    - [x] idea of using native data structures, arrays, hashes? is there a need
       for anything more complicated?
-    - [ ] use rspec
+    - [x] use rspec
     - [ ] coverage? not a coverage report fan but might be an idea? my view is
       everything is covered by an outside in BDD test as well as a TDD unit
       test
-    - [ ] tests are orthogonal? pull out the dictionary - do we mean
+    - [x] tests are orthogonal? pull out the dictionary - do we mean
       "orthogonal" asa synonmy for "independent" ie they don't crash if one
       thing breaks, they all break? in my BDD/TDD approach I would expect most
       of the time 2 tests to fail the outside in BDD describing what behaviour
       has broken and a TDD unit tests showing what causes that to break?
-    - [ ] tests explain the functionality Object Orientation - I presume there
+    - [x] tests explain the functionality Object Orientation - I presume there
       is a missing comma here? should be functionality, Object Orientation? ie
       if a FileParser returns an array of Account objects or if a debit 100
       occurs on an account with 10 an error is raised
-    - [ ] encapsulation, seperation of concerns, short methods, readable all
+    - [x] encapsulation, seperation of concerns, short methods, readable all
       the good things
-    - [ ] runs and provides feedback - error, success, output
-    - [ ] calculates test files accurately - presumably the provided files
+    - [x] runs and provides feedback - error, success, output
+    - [x] calculates test files accurately - presumably the provided files
       `mable_acc_balance.csv` and `mable_trans.csv`
-- [ ] anlyse the problem
-    - [ ] Daily CSV file with transfers
-        - [ ] how big?
-        - [ ] only CSV?
-        - [ ] how identified as daily?
-    - [ ] transfers they want to make between accounts for customers they are
+- [x] anlyse the problem
+    - [x] Daily CSV file with transfers
+        - [x] how big?
+        - [x] only CSV?
+        - [x] how identified as daily?
+    - [x] transfers they want to make between accounts for customers they are
       doing business with
-        - [ ] how to deal with customers they are NOT doing business with
-        - [ ] how to deal with customers they USED to do business with
-        - [ ] is there any chance of wrong data?
-        - [ ] what if the transfers were run for a historical date? where a
+        - [x] how to deal with customers they are NOT doing business with
+        - [x] how to deal with customers they USED to do business with
+        - [x] is there any chance of wrong data?
+        - [x] what if the transfers were run for a historical date? where a
           customer is no longer on the "do business with list" is this a
           possiblitly?
-    - [ ] Accounts are identified by 16 digit number
-        - [ ] is this important? does it need validation? what if the account
+    - [x] Accounts are identified by 16 digit number
+        - [x] is this important? does it need validation? what if the account
           ID is not valid?
-    - [ ] money cannot be transferred from them that will put the account
+    - [x] money cannot be transferred from them that will put the account
       balance below $0
-        - [ ] is this just the ending balance? ie can Account X transfer
+        - [x] is this just the ending balance? ie can Account X transfer
           negative during the day and end in positive?
-    - [ ] implement a simple system
-        - [ ] implement so code needs to be written
-        - [ ] "simple system" could be used as a guiding principle
-    - [ ] can load account balances for a single company
-        - [ ] how many balances is that? what would be a reasonable limit in
+    - [x] implement a simple system
+        - [x] implement so code needs to be written
+        - [x] "simple system" could be used as a guiding principle
+    - [x] can load account balances for a single company
+        - [x] how many balances is that? what would be a reasonable limit in
           terms of size?
-    - [ ] then accept a day's transfers in a CSV file
-        - [ ] again only CSV
-        - [ ] a "day's" transfer - how big? what is the limit?
-        - [ ] does "accept" a day's transfers mean "Actually calculate the
+    - [x] then accept a day's transfers in a CSV file
+        - [x] again only CSV
+        - [x] a "day's" transfer - how big? what is the limit?
+        - [x] does "accept" a day's transfers mean "Actually calculate the
           remaining balances" or only "accpet" that the transfers do not go
           below $0? I am guessing a safe assumption is both? although this is
           not clear?
-        - [ ] also does "accept" mean this "simple banking service" is actually
+        - [x] also does "accept" mean this "simple banking service" is actually
           performing the transfers? clearly not as there is no banking API to
           move funds between accounts or simple saying the file provided is
           "acceptable" as in the accounts exist and nothing goes below 0 so it
           can be passed onto an actual banking app to perform the transfers?
-    - [ ] on size of balance and transfers
-        - [ ] what is considered reasonable?
-        - [ ] what is the limit on size of either file for memory/system
+    - [x] on size of balance and transfers
+        - [x] what is considered reasonable?
+        - [x] what is the limit on size of either file for memory/system
           resources and time?
     - [x] example files provided would result in a balance (as calculated by
       hand)
@@ -176,23 +208,23 @@ TODO ... this will come out of incomplete work from the Work Log analysis
         | 1212343433335665 |   1725.60 | + 500 + 25.60    |
         | 3212343433335755 |  48679.50 | - 1000 - 320.50  |
 
-    - [ ] probably should use a Money library like the Money gem
-    - [ ] doing the manual calclations above kind of resembles a double entry
+    - [x] probably should use a Money library like the Money gem
+    - [x] doing the manual calclations above kind of resembles a double entry
       ledger, where every calculation has an associated debit and credit
-        - [ ] might be good to represent this in the modelling of the problem
-        - [ ] presumably a debit and credit have to happen a the same time in a
+        - [🔜] might be good to represent this in the modelling of the problem
+        - [x] presumably a debit and credit have to happen a the same time in a
           sort of transaction or not happen at all
-        - [ ] every transaction should happen only once, so may need to make
+        - [x] every transaction should happen only once, so may need to make
           sure they are idempotent, maybe by line number in the CSV? or could
           build out a sort of ledger like a cheap version of a blockchain,
           where the MD5 hash of the previous transactions need to be calculated
           prior to pefrorming the next transaction? not sure if that sits with
           "Simple system" but sounds like fun 👨‍💻
-        - [ ] could the transactions ever be split into separate threads?
+        - [🔜] could the transactions ever be split into separate threads?
           workers? asynchronous jobs to scale and process quickly?
-        - [ ] would there be any value in adding a caching layer at any point,
+        - [🔜] would there be any value in adding a caching layer at any point,
           in case files are too large?
-        - [ ] would other technology choices like a database or something like
+        - [🔜] would other technology choices like a database or something like
           Apache Arrow (in-memory analytics) have benefits here? I did a tech
           talk at RORO meetup - 120X faster than ruby CSV
 
@@ -203,7 +235,7 @@ TODO ... this will come out of incomplete work from the Work Log analysis
           and was actually recently mentioned at RubyKaigi Matsumoto Japan in a
           talk about ADBC Arrow DataBase Connectivity slides available on
           https://www.clear-code.com/blog/2023/5/15/rubykaigi-2023.html
-        - [ ] this also brings up a question of if it is better to tackle this
+        - [x] this also brings up a question of if it is better to tackle this
           on more of an ObjectOriented fashion with objects representing the
           core parts of the system: `FileParsing`, `Accounts`, `Transactions`,
           `Balance`, `BalanceWriter` or more of a Functional fashion with
