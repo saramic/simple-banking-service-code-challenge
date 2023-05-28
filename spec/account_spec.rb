@@ -57,6 +57,14 @@ RSpec.describe Account do
     let(:account_to) { Account.new(account_number: "1234560000000002", balance: "0") }
     let(:transfer) { Transfer.new(from: account_from, to: account_to, amount: "9.95") }
 
+    context "with a valid transfer" do
+      it "transfers the money", :aggregate_failures do
+        account_from.perform_transfer!(transfer)
+        expect(account_from.balance_in_cents).to eq 5
+        expect(account_to.balance_in_cents).to eq 995
+      end
+    end
+
     context "when from account would go negative" do
       let(:transfer) { Transfer.new(from: account_from, to: account_to, amount: "10.01") }
 

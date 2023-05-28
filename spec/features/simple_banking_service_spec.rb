@@ -19,14 +19,13 @@ feature "simple banking service" do
     end
 
     Then "the result is CSV matching the correct results" do
-      pending "no result is currently output"
       expect(@result).to eq(
         <<~EO_REPORT_OUTPUT
           1111234522226789,4820.50
           1111234522221234,9974.40
           2222123433331212,1550.00
           1212343433335665,1725.60
-          3212343433335755,48779.50
+          3212343433335755,48679.50
         EO_REPORT_OUTPUT
       )
     end

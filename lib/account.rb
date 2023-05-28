@@ -27,8 +27,12 @@ class Account
       raise ArgumentError, "transfer of #{Money.from_cents(amount_in_cents).format.inspect} " \
         "would bring account #{number.inspect} below 0 with current balance #{balance.format.inspect}"
     end
+
+    @balance_in_cents -= amount_in_cents
+    amount_in_cents
   end
 
   def credit_cents(amount_in_cents)
+    @balance_in_cents += amount_in_cents
   end
 end
