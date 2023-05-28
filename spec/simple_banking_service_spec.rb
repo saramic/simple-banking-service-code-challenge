@@ -4,6 +4,7 @@ require "simple_banking_service"
 require "account_input_parser"
 require "transfer_input_parser"
 require "ledger"
+require "output_writer"
 require "tempfile"
 
 RSpec.describe SimpleBankingService do
@@ -11,14 +12,19 @@ RSpec.describe SimpleBankingService do
     let(:account_balance) { temp_file_with_contents("account_balance.csv") { "" } }
     let(:transfers) { temp_file_with_contents("transfers.csv") { "" } }
 
-    it "returns an empty string and no error for empty accounts and transfers" do
-      expect(SimpleBankingService.run(account_balance, transfers)).to eq("")
+    before do
+      allow(AccountInputParser).to receive(:parse)
+      allow(TransferInputParser).to receive(:parse)
+      allow(Ledger).to receive(:new).and_call_original
+    end
+
+    it "returns the output of ledger.accounts via the OutputWriter" do
+      allow(OutputWriter).to receive(:write).and_return("the banking service output")
+
+      expect(SimpleBankingService.run(account_balance, transfers)).to eq("the banking service output")
     end
 
     it "passes the first file to the AccountInputParser and second to TransferInputParser", :aggregate_failures do
-      allow(AccountInputParser).to receive(:parse)
-      allow(TransferInputParser).to receive(:parse)
-
       SimpleBankingService.run(account_balance, transfers)
 
       expect(AccountInputParser).to have_received(:parse).with(account_balance)
@@ -28,7 +34,6 @@ RSpec.describe SimpleBankingService do
     it "passes the accounts and transfers to a ledger", :aggregate_failures do
       allow(AccountInputParser).to receive(:parse).and_return("the accounts")
       allow(TransferInputParser).to receive(:parse).and_return("the transfers")
-      allow(Ledger).to receive(:new)
 
       SimpleBankingService.run(account_balance, transfers)
 
