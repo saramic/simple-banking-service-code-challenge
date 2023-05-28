@@ -59,6 +59,7 @@ make rubocop    # run rubocop
 
 10. if the transfer has an account that does not exist in the provided account
     file the program will exit with an error
+11. nothing wrong with transfers between same account, nothing should happen
 
 TODO ... this will come out of incomplete work from the Work Log analysis
 

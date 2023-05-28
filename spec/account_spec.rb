@@ -35,6 +35,7 @@ RSpec.describe Account do
     end
   end
 
+  # NOTE: this is now the responsibility of util/balance_parser
   context "with balances that are not valid" do
     %w[
       -1
@@ -46,7 +47,7 @@ RSpec.describe Account do
       it "complains bitterly for #{balance.inspect}" do
         expect {
           Account.new(account_number: "1234560000000001", balance: balance)
-        }.to raise_error ArgumentError, "balance must be a valid positive number rounded to cents #{balance.inspect}"
+        }.to raise_error ArgumentError, "money amount must be a valid positive number rounded to cents #{balance.inspect}"
       end
     end
   end
