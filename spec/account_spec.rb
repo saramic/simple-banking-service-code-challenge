@@ -63,6 +63,15 @@ RSpec.describe Account do
         expect(account_from.balance_in_cents).to eq 5
         expect(account_to.balance_in_cents).to eq 995
       end
+
+      it "transfers are idempotent", :aggregate_failures do
+        account_from.perform_transfer!(transfer)
+        account_from.perform_transfer!(transfer)
+        account_from.perform_transfer!(transfer)
+
+        expect(account_from.balance_in_cents).to eq 5
+        expect(account_to.balance_in_cents).to eq 995
+      end
     end
 
     context "when from account would go negative" do

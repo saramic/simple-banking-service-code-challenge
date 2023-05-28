@@ -17,7 +17,8 @@ class Account
   end
 
   def perform_transfer!(transfer)
-    transfer.to.credit_cents(debit_cents(transfer.amount_in_cents))
+    transfer.to.credit_cents(debit_cents(transfer.amount_in_cents)) unless transfer.performed?
+    transfer.performed!
   end
 
   protected
